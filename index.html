@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Drive Link Converter</title>
   
   <!-- PWA Meta Tags -->
@@ -21,6 +21,16 @@
     textarea { resize: vertical; }
     .link-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
     .link-card:hover { transform: translateX(4px); }
+    
+    /* Prevent zoom on input focus for mobile */
+    input, textarea, select {
+      font-size: 16px !important;
+    }
+    
+    /* Prevent double-tap zoom */
+    * {
+      touch-action: manipulation;
+    }
     
     /* Animations */
     @keyframes fadeIn {
@@ -94,19 +104,19 @@
     }
   </style>
 </head>
-<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 min-h-screen flex items-center justify-center py-8 px-4">
-  <div class="w-full max-w-2xl">
+<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 min-h-screen flex items-center justify-center py-6 px-3 sm:py-8 sm:px-4">
+  <div class="w-full max-w-2xl mx-auto">
     <!-- Header with Theme Toggle -->
-    <div class="flex items-center justify-between mb-6 animate-slideIn">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-600/30 logo-icon">
-          <i class="fas fa-cloud-arrow-down text-white text-lg"></i>
+    <div class="flex items-center justify-between mb-4 sm:mb-6 animate-slideIn">
+      <div class="flex items-center gap-2 sm:gap-3">
+        <div class="w-9 h-9 sm:w-10 sm:h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-600/30 logo-icon">
+          <i class="fas fa-cloud-arrow-down text-white text-base sm:text-lg"></i>
         </div>
-        <h1 class="text-xl font-bold text-white">Drive Link Converter</h1>
+        <h1 class="text-lg sm:text-xl font-bold text-white">Drive Link Converter</h1>
       </div>
       <button
         id="themeToggle"
-        class="w-10 h-10 rounded-xl bg-slate-700/50 hover:bg-slate-600/50 flex items-center justify-center transition border border-slate-600/30 btn-hover"
+        class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-700/50 hover:bg-slate-600/50 flex items-center justify-center transition border border-slate-600/30 btn-hover"
         title="Toggle theme"
       >
         <i id="themeIcon" class="fas fa-sun text-yellow-400"></i>
@@ -114,33 +124,33 @@
     </div>
 
     <!-- Card -->
-    <div class="card bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-slate-700/50 p-6 animate-fadeIn">
+    <div class="card bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-slate-700/50 p-4 sm:p-6 animate-fadeIn">
       
       <!-- Input Section -->
-      <div class="mb-5">
-        <label class="block text-sm font-semibold text-slate-300 mb-2">
+      <div class="mb-4 sm:mb-5">
+        <label class="block text-xs sm:text-sm font-semibold text-slate-300 mb-2">
           <i class="fas fa-link mr-2 text-blue-400"></i>Paste Google Drive Links
         </label>
         <textarea
           id="inputLinks"
           rows="5"
-          class="w-full px-4 py-3 border border-slate-600/50 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-sm font-mono bg-slate-900/50 text-slate-200 placeholder-slate-500"
+          class="w-full px-3 py-2.5 sm:px-4 sm:py-3 border border-slate-600/50 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-sm font-mono bg-slate-900/50 text-slate-200 placeholder-slate-500"
           placeholder="https://drive.google.com/open?id=FILE_ID&usp=drive_copy"
         ></textarea>
       </div>
 
       <!-- Convert Button -->
-      <div class="flex gap-3 mb-5">
+      <div class="flex gap-2 sm:gap-3 mb-4 sm:mb-5 flex-col sm:flex-row">
         <button
           id="convertBtn"
-          class="flex-1 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-semibold py-3.5 px-6 rounded-xl transition duration-200 shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 btn-hover"
+          class="flex-1 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-semibold py-3 px-4 sm:py-3.5 sm:px-6 rounded-xl transition duration-200 shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 btn-hover text-sm sm:text-base"
         >
           <i class="fas fa-bolt animate-pulse"></i>
           <span>Convert Links</span>
         </button>
         <button
           id="clearBtn"
-          class="px-6 bg-slate-700/30 hover:bg-red-500/20 text-slate-400 hover:text-red-400 font-semibold py-3.5 rounded-xl transition duration-200 border border-slate-600/30 hover:border-red-500/30 btn-hover"
+          class="sm:px-6 bg-slate-700/30 hover:bg-red-500/20 text-slate-400 hover:text-red-400 font-semibold py-3 px-4 sm:py-3.5 rounded-xl transition duration-200 border border-slate-600/30 hover:border-red-500/30 btn-hover text-sm sm:text-base"
           title="Clear all"
         >
           <i class="fas fa-trash"></i>
@@ -148,15 +158,15 @@
       </div>
 
       <!-- Output Section -->
-      <div class="mb-5">
-        <label class="block text-sm font-semibold text-slate-300 mb-2">
+      <div class="mb-4 sm:mb-5">
+        <label class="block text-xs sm:text-sm font-semibold text-slate-300 mb-2">
           <i class="fas fa-download mr-2 text-green-400"></i>Download Links
         </label>
         <div
           id="outputLinks"
-          class="space-y-2 max-h-72 overflow-y-auto pr-2 custom-scrollbar"
+          class="space-y-2 max-h-64 sm:max-h-72 overflow-y-auto pr-2 custom-scrollbar"
         >
-          <p class="text-slate-500 text-sm italic text-center py-4">
+          <p class="text-slate-500 text-xs sm:text-sm italic text-center py-4">
             <i class="fas fa-arrow-left mr-2"></i>Converted links will appear here...
           </p>
         </div>
@@ -165,15 +175,15 @@
       <!-- Copy Button -->
       <button
         id="copyBtn"
-        class="w-full bg-slate-700/50 hover:bg-slate-600/50 text-slate-300 font-semibold py-3.5 px-6 rounded-xl transition duration-200 border border-slate-600/30 flex items-center justify-center gap-2 btn-hover"
+        class="w-full bg-slate-700/50 hover:bg-slate-600/50 text-slate-300 font-semibold py-3 px-4 sm:py-3.5 sm:px-6 rounded-xl transition duration-200 border border-slate-600/30 flex items-center justify-center gap-2 btn-hover text-sm sm:text-base"
       >
         <i class="fas fa-copy"></i>
         <span>Copy All</span>
       </button>
 
       <!-- Success Message -->
-      <div id="successMsg" class="hidden mt-4 text-center animate-bounceIn">
-        <span class="inline-flex items-center gap-2 bg-green-500/20 text-green-400 text-sm font-medium py-2 px-4 rounded-lg border border-green-500/30">
+      <div id="successMsg" class="hidden mt-3 sm:mt-4 text-center animate-bounceIn">
+        <span class="inline-flex items-center gap-2 bg-green-500/20 text-green-400 text-xs sm:text-sm font-medium py-2 px-3 sm:py-2 sm:px-4 rounded-lg border border-green-500/30">
           <i class="fas fa-check-circle"></i>
           <span>Copied to clipboard!</span>
         </span>
@@ -181,31 +191,31 @@
     </div>
 
     <!-- Footer -->
-    <footer class="text-center text-slate-500 text-sm mt-6 flex items-center justify-center gap-2">
+    <footer class="text-center text-slate-500 text-xs sm:text-sm mt-4 sm:mt-6 flex items-center justify-center gap-2 px-2">
       <i class="fas fa-info-circle"></i>
       <span>Paste multiple links, one per line</span>
     </footer>
 
     <!-- Copyright -->
-    <div class="copyright text-center mt-6 text-slate-600 text-xs flex items-center justify-center gap-1">
+    <div class="copyright text-center mt-4 sm:mt-6 text-slate-600 text-xs flex items-center justify-center gap-1 px-2">
       <span>© 2026 Crafted with</span>
       <i class="fas fa-heart text-red-500 animate-pulse"></i>
       <span>by Ayad E. Korial</span>
     </div>
 
     <!-- Install Prompt -->
-    <div id="installPrompt" class="hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-slate-800 border border-slate-600/50 rounded-xl shadow-2xl p-4 flex items-center gap-3 animate-slideIn z-50">
-      <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-        <i class="fas fa-download text-white"></i>
+    <div id="installPrompt" class="hidden fixed bottom-3 left-1/2 transform -translate-x-1/2 bg-slate-800 border border-slate-600/50 rounded-xl shadow-2xl p-3 sm:p-4 w-[90%] max-w-sm flex items-center gap-2 sm:gap-3 animate-slideIn z-50">
+      <div class="w-9 h-9 sm:w-10 sm:h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+        <i class="fas fa-download text-white text-sm sm:text-base"></i>
       </div>
-      <div class="flex-1">
-        <p class="text-white font-semibold text-sm">Install App</p>
-        <p class="text-slate-400 text-xs">Get quick access to Drive Converter</p>
+      <div class="flex-1 min-w-0">
+        <p class="text-white font-semibold text-xs sm:text-sm truncate">Install App</p>
+        <p class="text-slate-400 text-xs truncate">Get quick access to Drive Converter</p>
       </div>
-      <button id="installBtn" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg transition btn-hover text-sm">
+      <button id="installBtn" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold py-1.5 px-3 sm:py-2 sm:px-4 rounded-lg transition btn-hover text-xs sm:text-sm flex-shrink-0">
         Install
       </button>
-      <button id="dismissInstall" class="text-slate-400 hover:text-slate-300 transition p-2" title="Dismiss">
+      <button id="dismissInstall" class="text-slate-400 hover:text-slate-300 transition p-1.5 sm:p-2 flex-shrink-0" title="Dismiss">
         <i class="fas fa-times"></i>
       </button>
     </div>
@@ -235,30 +245,30 @@
 
     function applyTheme(dark) {
       if (dark) {
-        document.body.className = 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 min-h-screen flex items-center justify-center py-8 px-4';
-        document.querySelector('.card').className = 'card bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-slate-700/50 p-6';
+        document.body.className = 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 min-h-screen flex items-center justify-center py-6 px-3 sm:py-8 sm:px-4';
+        document.querySelector('.card').className = 'card bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-slate-700/50 p-4 sm:p-6';
         document.querySelectorAll('label').forEach(el => {
           el.className = el.className.replace('text-gray-700', 'text-slate-300');
         });
-        document.getElementById('inputLinks').className = 'w-full px-4 py-3 border border-slate-600/50 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-sm font-mono bg-slate-900/50 text-slate-200 placeholder-slate-500';
-        document.getElementById('copyBtn').className = 'w-full bg-slate-700/50 hover:bg-slate-600/50 text-slate-300 font-semibold py-3.5 px-6 rounded-xl transition duration-200 border border-slate-600/30 flex items-center justify-center gap-2 btn-hover';
-        document.getElementById('successMsg').className = 'hidden mt-4 text-center animate-bounceIn';
-        document.querySelector('footer').className = 'text-center text-slate-500 text-sm mt-6 flex items-center justify-center gap-2';
-        document.querySelector('.copyright').className = 'text-center mt-6 text-slate-600 text-xs flex items-center justify-center gap-1';
-        document.getElementById('themeToggle').className = 'w-10 h-10 rounded-xl bg-slate-700/50 hover:bg-slate-600/50 flex items-center justify-center transition border border-slate-600/30 btn-hover';
-        themeIcon.className = 'fas fa-sun text-yellow-400 animate-pulse';
+        document.getElementById('inputLinks').className = 'w-full px-3 py-2.5 sm:px-4 sm:py-3 border border-slate-600/50 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-sm font-mono bg-slate-900/50 text-slate-200 placeholder-slate-500';
+        document.getElementById('copyBtn').className = 'w-full bg-slate-700/50 hover:bg-slate-600/50 text-slate-300 font-semibold py-3 px-4 sm:py-3.5 sm:px-6 rounded-xl transition duration-200 border border-slate-600/30 flex items-center justify-center gap-2 btn-hover text-sm sm:text-base';
+        document.getElementById('successMsg').className = 'hidden mt-3 sm:mt-4 text-center animate-bounceIn';
+        document.querySelector('footer').className = 'text-center text-slate-500 text-xs sm:text-sm mt-4 sm:mt-6 flex items-center justify-center gap-2 px-2';
+        document.querySelector('.copyright').className = 'text-center mt-4 sm:mt-6 text-slate-600 text-xs flex items-center justify-center gap-1 px-2';
+        document.getElementById('themeToggle').className = 'w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-700/50 hover:bg-slate-600/50 flex items-center justify-center transition border border-slate-600/30 btn-hover';
+        themeIcon.className = 'fas fa-sun text-yellow-400';
       } else {
-        document.body.className = 'bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100 min-h-screen flex items-center justify-center py-8 px-4';
-        document.querySelector('.card').className = 'card bg-white rounded-2xl shadow-2xl border border-gray-200 p-6';
+        document.body.className = 'bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100 min-h-screen flex items-center justify-center py-6 px-3 sm:py-8 sm:px-4';
+        document.querySelector('.card').className = 'card bg-white rounded-2xl shadow-2xl border border-gray-200 p-4 sm:p-6';
         document.querySelectorAll('label').forEach(el => {
-          el.className = 'block text-sm font-semibold text-gray-700 mb-2';
+          el.className = 'block text-xs sm:text-sm font-semibold text-gray-700 mb-2';
         });
-        document.getElementById('inputLinks').className = 'w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-sm font-mono placeholder-gray-400';
-        document.getElementById('copyBtn').className = 'w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3.5 px-6 rounded-xl transition duration-200 border border-gray-200 flex items-center justify-center gap-2 btn-hover';
-        document.getElementById('successMsg').className = 'hidden mt-4 text-center animate-bounceIn';
-        document.querySelector('footer').className = 'text-center text-gray-500 text-sm mt-6 flex items-center justify-center gap-2';
-        document.querySelector('.copyright').className = 'text-center mt-6 text-gray-400 text-xs flex items-center justify-center gap-1';
-        document.getElementById('themeToggle').className = 'w-10 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition border border-gray-200 btn-hover';
+        document.getElementById('inputLinks').className = 'w-full px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-sm font-mono placeholder-gray-400';
+        document.getElementById('copyBtn').className = 'w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-4 sm:py-3.5 sm:px-6 rounded-xl transition duration-200 border border-gray-200 flex items-center justify-center gap-2 btn-hover text-sm sm:text-base';
+        document.getElementById('successMsg').className = 'hidden mt-3 sm:mt-4 text-center animate-bounceIn';
+        document.querySelector('footer').className = 'text-center text-gray-500 text-xs sm:text-sm mt-4 sm:mt-6 flex items-center justify-center gap-2 px-2';
+        document.querySelector('.copyright').className = 'text-center mt-4 sm:mt-6 text-gray-400 text-xs flex items-center justify-center gap-1 px-2';
+        document.getElementById('themeToggle').className = 'w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition border border-gray-200 btn-hover';
         themeIcon.className = 'fas fa-moon text-slate-600';
       }
     }
