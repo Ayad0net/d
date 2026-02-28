@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563eb"/>
+      <stop offset="100%" style="stop-color:#3b82f6"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="100" fill="url(#bg)"/>
+  <g fill="#ffffff">
+    <!-- Cloud -->
+    <circle cx="256" cy="256" r="100"/>
+    <circle cx="200" cy="280" r="85"/>
+    <circle cx="312" cy="280" r="85"/>
+    <circle cx="220" cy="200" r="75"/>
+    <circle cx="292" cy="200" r="75"/>
+    <!-- Download Arrow -->
+    <path d="M256 320 L256 400" stroke="#ffffff" stroke-width="16" fill="none" stroke-linecap="round"/>
+    <path d="M220 370 L256 405 L292 370" stroke="#ffffff" stroke-width="16" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
