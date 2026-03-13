@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "e7bce42e8fd9adb5",
+        "id": "7e2787550223bd97",
         "type": "tabs",
         "children": [
           {
-            "id": "96bfdb7ec295ba66",
+            "id": "b0670bb944c13e9d",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -187,10 +187,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "96bfdb7ec295ba66",
+  "active": "b0670bb944c13e9d",
   "lastOpenFiles": [
-    "PWA_README fffff.md",
     "samples/Untitled.md",
+    "PWA_README fffff.md",
+    "Pasted image 20260314003132.png",
     "samples"
   ]
 }
