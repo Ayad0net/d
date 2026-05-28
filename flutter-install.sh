@@ -2,11 +2,11 @@
 # ---------------------------------------------------------------------------
 #  install_flutter_all_os.sh
 #  Cross‑platform Flutter environment setup (macOS / Linux / Windows Git Bash)
-#  Improved banner – clear Unicode block letters
+#  Clear banner + post‑install avdmanager cheat sheet
 # ---------------------------------------------------------------------------
 set -eo pipefail
 
-# ---------- Graphical Banner (clear block letters) ----------
+# ---------- Banner (clear block letters) ----------
 show_banner() {
     echo -e "\033[1;36m"
     cat << "EOF"
@@ -226,3 +226,39 @@ if [[ "$os_name" == "Windows" ]]; then
 else
     echo "⚠️  Restart your terminal or run: source $profile_file"
 fi
+
+# ---------- 7. AVD Manager quick reference ----------
+show_avd_cheatsheet() {
+    echo ""
+    echo -e "\033[1;36m╔════════════════════════════════════════════════╗\033[0m"
+    echo -e "\033[1;36m║   AVD Manager Cheat Sheet (Android Emulators)  ║\033[0m"
+    echo -e "\033[1;36m╚════════════════════════════════════════════════╝\033[0m"
+    echo ""
+    echo -e "\033[1;33mCommon avdmanager commands:\033[0m"
+    echo "  avdmanager list avd          – List existing AVDs"
+    echo "  avdmanager list target       – List available system images"
+    echo "  avdmanager list device       – List device definitions"
+    echo "  avdmanager create avd        – Create a new AVD (see example below)"
+    echo "  avdmanager delete avd -n <name>  – Delete an AVD"
+    echo ""
+    echo -e "\033[1;33mCreating a new AVD example:\033[0m"
+    echo "  avdmanager create avd -n Pixel_5_API_34 \\"
+    echo "    -k \"system-images;android-34;google_apis;x86_64\" \\"
+    echo "    -d pixel_5"
+    echo ""
+    echo -e "\033[1;33mLaunching emulators from command line:\033[0m"
+    echo "  emulator -avd <avd_name>     – Start an AVD"
+    echo "  emulator -avd <avd_name> -no-snapshot-load  – Cold boot"
+    echo ""
+    echo -e "\033[1;33mUsing Flutter to manage emulators:\033[0m"
+    echo "  flutter emulators            – List configured emulators"
+    echo "  flutter emulators --launch <emulator_id>  – Start an emulator"
+    echo "  flutter emulators --create   – Create a new emulator"
+    echo ""
+    echo -e "\033[1;33mInstalling additional system images:\033[0m"
+    echo "  sdkmanager \"system-images;android-34;google_apis;x86_64\""
+    echo ""
+    echo "More info: https://developer.android.com/studio/run/managing-avds"
+}
+
+show_avd_cheatsheet
