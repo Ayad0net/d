@@ -2,20 +2,20 @@
 # ---------------------------------------------------------------------------
 #  install_flutter_all_os.sh
 #  Cross‑platform Flutter environment setup (macOS / Linux / Windows Git Bash)
-#  Shows a stylised Flutter banner on start.
-#  Fix: use proper temp directory for downloads
+#  Improved banner – clear Unicode block letters
 # ---------------------------------------------------------------------------
 set -eo pipefail
 
-# ---------- Graphical Banner ----------
+# ---------- Graphical Banner (clear block letters) ----------
 show_banner() {
     echo -e "\033[1;36m"
     cat << "EOF"
-    ______  __    __   __  ____  ______  ______  ____
-   / __/ / / /   / /  / /_/ __/ /_  __/ /_  __/ / __ \
-  / /_/ / / / /   / /  / __/ __/   / /    / /   / /_/ /
- / __/ /_/ / /___/ /__/ /_/ __/   / /    / /   / _, _/
-/_/  \____/_____/_____/\__/___/   /_/    /_/   /_/ |_|
+    ███████╗██╗     ██╗   ██╗████████╗████████╗███████╗██████╗
+    ██╔════╝██║     ██║   ██║╚══██╔══╝╚══██╔══╝██╔════╝██╔══██╗
+    █████╗  ██║     ██║   ██║   ██║      ██║   █████╗  ██████╔╝
+    ██╔══╝  ██║     ██║   ██║   ██║      ██║   ██╔══╝  ██╔══██╗
+    ██║     ███████╗╚██████╔╝   ██║      ██║   ███████╗██║  ██║
+    ╚═╝     ╚══════╝ ╚═════╝    ╚═╝      ╚═╝   ╚══════╝╚═╝  ╚═╝
 EOF
     echo -e "\033[0m"
     echo -e "\033[1;33m   Flutter Development Environment Setup\033[0m"
@@ -156,7 +156,7 @@ if [[ ! -f "$CMD_TOOLS_DIR/bin/sdkmanager" ]]; then
         Linux)     tools_url="https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip" ;;
         Windows)   tools_url="https://dl.google.com/android/repository/commandlinetools-win-11076708_latest.zip" ;;
     esac
-    zip="$TMP_DIR/cmdline-tools.zip"   # <-- fixed path
+    zip="$TMP_DIR/cmdline-tools.zip"
     curl -L "$tools_url" -o "$zip"
     unzip -qo "$zip" -d "$ANDROID_SDK_ROOT/cmdline-tools"
     mv "$ANDROID_SDK_ROOT/cmdline-tools/cmdline-tools" "$CMD_TOOLS_DIR"
