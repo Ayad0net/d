@@ -3,6 +3,7 @@
 #  install_flutter_all_os.sh
 #  Cross‑platform Flutter environment setup (macOS / Linux / Windows Git Bash)
 #  Shows a stylised Flutter banner on start.
+#  Fix: use proper temp directory for downloads
 # ---------------------------------------------------------------------------
 set -eo pipefail
 
@@ -22,7 +23,7 @@ EOF
 }
 
 show_banner
-sleep 1   # let the user see the banner
+sleep 1
 
 # ---------- helpers ----------
 command_exists() { command -v "$1" &>/dev/null; }
@@ -36,6 +37,17 @@ case "$os" in
     *)       echo "❌ Unsupported OS: $os"; exit 1 ;;
 esac
 echo "🖥️  Detected OS: $os_name"
+
+# ---------- Temporary directory (fix for missing $TEMP on macOS/Linux) ----------
+if [[ -z "$TMPDIR" && "$os_name" != "Windows" ]]; then
+    export TMPDIR="/tmp"
+fi
+if [[ "$os_name" == "Windows" ]]; then
+    TMP_DIR="${TEMP:-/tmp}"
+else
+    TMP_DIR="${TMPDIR:-/tmp}"
+fi
+echo "📁 Temporary files will be saved in: $TMP_DIR"
 
 # ---------- Check prerequisites ----------
 for cmd in curl git unzip; do
@@ -84,7 +96,7 @@ install_java() {
             else
                 echo "Downloading Eclipse Temurin JDK 17 installer..."
                 jdk_url="https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.12%2B7/OpenJDK17U-jdk_x64_windows_hotspot_17.0.12_7.msi"
-                installer="$TEMP/jdk17.msi"
+                installer="$TMP_DIR/jdk17.msi"
                 curl -L "$jdk_url" -o "$installer"
                 echo "Running installer (admin privileges required)..."
                 msiexec //i "$installer" //quiet //norestart
@@ -144,7 +156,7 @@ if [[ ! -f "$CMD_TOOLS_DIR/bin/sdkmanager" ]]; then
         Linux)     tools_url="https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip" ;;
         Windows)   tools_url="https://dl.google.com/android/repository/commandlinetools-win-11076708_latest.zip" ;;
     esac
-    zip="$TEMP/cmdline-tools.zip"
+    zip="$TMP_DIR/cmdline-tools.zip"   # <-- fixed path
     curl -L "$tools_url" -o "$zip"
     unzip -qo "$zip" -d "$ANDROID_SDK_ROOT/cmdline-tools"
     mv "$ANDROID_SDK_ROOT/cmdline-tools/cmdline-tools" "$CMD_TOOLS_DIR"
