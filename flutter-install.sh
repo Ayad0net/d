@@ -2,13 +2,13 @@
 # ---------------------------------------------------------------------------
 #  install_flutter_all_os.sh
 #  Cross‑platform Flutter setup (macOS / Linux / Windows Git Bash)
-#  Shows banner, installs everything, and always prints an avdmanager cheatsheet.
+#  Now uses printf for colours – no more “-e” in output!
 # ---------------------------------------------------------------------------
-set -eo pipefail   # exit on error, but we handle flutter doctor safely
+set -eo pipefail
 
-# ---------- Banner ----------
+# ---------- Banner (printf for colour) ----------
 show_banner() {
-    echo -e "\033[1;36m"
+    printf "\033[1;36m"
     cat << "EOF"
     ███████╗██╗     ██╗   ██╗████████╗████████╗███████╗██████╗
     ██╔════╝██║     ██║   ██║╚══██╔══╝╚══██╔══╝██╔════╝██╔══██╗
@@ -17,9 +17,8 @@ show_banner() {
     ██║     ███████╗╚██████╔╝   ██║      ██║   ███████╗██║  ██║
     ╚═╝     ╚══════╝ ╚═════╝    ╚═╝      ╚═╝   ╚══════╝╚═╝  ╚═╝
 EOF
-    echo -e "\033[0m"
-    echo -e "\033[1;33m   Flutter Development Environment Setup\033[0m"
-    echo ""
+    printf "\033[0m\n"
+    printf "\033[1;33m   Flutter Development Environment Setup\033[0m\n\n"
 }
 
 show_banner
@@ -208,44 +207,44 @@ case "$os_name" in
         ;;
 esac
 
-# ---------- 6. Run flutter doctor (DO NOT EXIT ON FAIL) ----------
+# ---------- 6. Flutter doctor (does NOT stop the script) ----------
 echo ""
 echo "🚀 Running flutter doctor (warnings are normal)..."
-flutter doctor -v || true   # <--- continue even if doctor reports issues
+flutter doctor -v || true
 
-# ---------- 7. AVD Manager Cheat Sheet (always printed) ----------
-echo ""
-echo -e "\033[1;36m╔════════════════════════════════════════════════╗\033[0m"
-echo -e "\033[1;36m║   AVD Manager Cheat Sheet (Android Emulators)  ║\033[0m"
-echo -e "\033[1;36m╚════════════════════════════════════════════════╝\033[0m"
-echo ""
-echo -e "\033[1;33mCommon avdmanager commands:\033[0m"
+# ---------- 7. AVD Manager Cheat Sheet (all printf – no more “-e”) ----------
+printf "\n"
+printf "\033[1;36m╔════════════════════════════════════════════════╗\033[0m\n"
+printf "\033[1;36m║   AVD Manager Cheat Sheet (Android Emulators)  ║\033[0m\n"
+printf "\033[1;36m╚════════════════════════════════════════════════╝\033[0m\n"
+printf "\n"
+printf "\033[1;33mCommon avdmanager commands:\033[0m\n"
 echo "  avdmanager list avd            – List existing AVDs"
 echo "  avdmanager list target         – List available system images"
 echo "  avdmanager list device         – List device definitions"
 echo "  avdmanager create avd          – Create a new AVD (example below)"
 echo "  avdmanager delete avd -n <name>   – Delete an AVD"
-echo ""
-echo -e "\033[1;33mCreating a new AVD (example):\033[0m"
+printf "\n"
+printf "\033[1;33mCreating a new AVD (example):\033[0m\n"
 echo "  avdmanager create avd -n Pixel_5_API_34 \\"
 echo "    -k \"system-images;android-34;google_apis;x86_64\" \\"
 echo "    -d pixel_5"
-echo ""
-echo -e "\033[1;33mLaunching emulators from the command line:\033[0m"
+printf "\n"
+printf "\033[1;33mLaunching emulators from the command line:\033[0m\n"
 echo "  emulator -avd <avd_name>       – Start an AVD"
 echo "  emulator -avd <avd_name> -no-snapshot-load   – Cold boot"
-echo ""
-echo -e "\033[1;33mFlutter emulator commands:\033[0m"
+printf "\n"
+printf "\033[1;33mFlutter emulator commands:\033[0m\n"
 echo "  flutter emulators              – List configured emulators"
 echo "  flutter emulators --launch <id>   – Start an emulator"
 echo "  flutter emulators --create [name] – Create a new emulator"
-echo ""
-echo -e "\033[1;33mAdding system images:\033[0m"
+printf "\n"
+printf "\033[1;33mAdding system images:\033[0m\n"
 echo "  sdkmanager \"system-images;android-34;google_apis;x86_64\""
-echo ""
+printf "\n"
 echo "More info: https://developer.android.com/studio/run/managing-avds"
 
-echo ""
+printf "\n"
 echo "🎉 Setup complete!"
 if [[ "$os_name" == "Windows" ]]; then
     echo "⚠️  Close and reopen Git Bash to apply new environment variables."
