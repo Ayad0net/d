@@ -2,9 +2,27 @@
 # ---------------------------------------------------------------------------
 #  install_flutter_all_os.sh
 #  Cross‑platform Flutter environment setup (macOS / Linux / Windows Git Bash)
-#  Requirements: bash, curl, git, unzip
+#  Shows a stylised Flutter banner on start.
 # ---------------------------------------------------------------------------
 set -eo pipefail
+
+# ---------- Graphical Banner ----------
+show_banner() {
+    echo -e "\033[1;36m"
+    cat << "EOF"
+    ______  __    __   __  ____  ______  ______  ____
+   / __/ / / /   / /  / /_/ __/ /_  __/ /_  __/ / __ \
+  / /_/ / / / /   / /  / __/ __/   / /    / /   / /_/ /
+ / __/ /_/ / /___/ /__/ /_/ __/   / /    / /   / _, _/
+/_/  \____/_____/_____/\__/___/   /_/    /_/   /_/ |_|
+EOF
+    echo -e "\033[0m"
+    echo -e "\033[1;33m   Flutter Development Environment Setup\033[0m"
+    echo ""
+}
+
+show_banner
+sleep 1   # let the user see the banner
 
 # ---------- helpers ----------
 command_exists() { command -v "$1" &>/dev/null; }
@@ -57,7 +75,6 @@ install_java() {
             fi
             ;;
         Windows)
-            # Attempt winget / chocolatey / direct download
             if command_exists winget; then
                 echo "Using winget to install Eclipse Temurin JDK 17..."
                 winget install EclipseAdoptium.Temurin.17.JDK --silent --accept-source-agreements
@@ -76,7 +93,6 @@ install_java() {
             ;;
     esac
 
-    # Verify Java
     if ! command_exists java; then
         echo "❌ Java installation failed. Please install Java 17 manually."
         exit 1
@@ -88,18 +104,14 @@ install_java
 if [[ "$os_name" == "macOS" ]]; then
     export JAVA_HOME="$(/usr/libexec/java_home -v 17)"
 elif [[ "$os_name" == "Windows" ]]; then
-    # On Windows, find Java home from registry or program files
     javapath="$(cmd //c "where java" 2>/dev/null | head -1 || true)"
     if [[ -n "$javapath" ]]; then
-        # Convert from e.g. C:\Program Files\Eclipse Adoptium\jdk-17.0.12.7-hotspot\bin\java.exe
         javapath="$(cygpath -u "$javapath")"
         export JAVA_HOME="$(dirname "$(dirname "$javapath")")"
     else
-        # fallback
         export JAVA_HOME="C:/Program Files/Eclipse Adoptium/jdk-17.0.12.7-hotspot"
     fi
 else
-    # Linux: use readlink
     java_bin="$(readlink -f "$(command -v java)")"
     export JAVA_HOME="$(dirname "$(dirname "$java_bin")")"
 fi
@@ -147,7 +159,7 @@ echo "📜 Accepting Android licences..."
 yes | "$CMD_TOOLS_DIR/bin/sdkmanager" --licenses >/dev/null 2>&1 || true
 yes | flutter doctor --android-licenses >/dev/null 2>&1 || true
 
-echo "📥 Installing Android SDK packages (platform‑tools, platform, build‑tools, emulator)..."
+echo "📥 Installing Android SDK packages..."
 "$CMD_TOOLS_DIR/bin/sdkmanager" --update >/dev/null 2>&1 || true
 "$CMD_TOOLS_DIR/bin/sdkmanager" \
     "platform-tools" "platforms;android-34" "build-tools;34.0.0" "emulator" >/dev/null 2>&1 || true
@@ -174,10 +186,8 @@ case "$os_name" in
         add_to_path_unless_present "$profile_file" "export PATH=\"\$HOME/flutter/bin:\$ANDROID_HOME/cmdline-tools/latest/bin:\$ANDROID_HOME/platform-tools:\$PATH\""
         ;;
     Windows)
-        # Permanent system/user variables using setx
         function win_setx {
             local var="$1" val="$2"
-            # Convert Unix path to Windows
             local winval
             winval=$(cygpath -w "$val")
             cmd //c "setx $var \"$winval\"" >/dev/null 2>&1 || true
@@ -185,7 +195,6 @@ case "$os_name" in
         win_setx JAVA_HOME "$JAVA_HOME"
         win_setx ANDROID_HOME "$ANDROID_SDK_ROOT"
         win_setx ANDROID_SDK_ROOT "$ANDROID_SDK_ROOT"
-        # Add to user PATH (using PowerShell for reliability)
         powershell -Command \
             "[Environment]::SetEnvironmentVariable('Path', \
             [Environment]::GetEnvironmentVariable('Path', 'User') + ';$HOME\flutter\bin;$ANDROID_SDK_ROOT\cmdline-tools\latest\bin;$ANDROID_SDK_ROOT\platform-tools', \
