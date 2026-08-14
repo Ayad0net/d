@@ -4,37 +4,20 @@
     "type": "split",
     "children": [
       {
-        "id": "34d5d722f32a3c2a",
+        "id": "7a17e6a35710b27c",
         "type": "tabs",
         "children": [
           {
-            "id": "08054f989c900c54",
+            "id": "3ee87f4a7f4eb0f5",
             "type": "leaf",
             "state": {
-              "type": "image",
-              "state": {
-                "file": "Pasted image 20260314003132.png"
-              },
-              "icon": "lucide-image",
-              "title": "Pasted image 20260314003132"
-            }
-          },
-          {
-            "id": "be9885263175cd3f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "efefefwf.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "efefefwf"
+              "title": "New tab"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -54,7 +37,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -204,10 +189,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "be9885263175cd3f",
+  "active": "3ee87f4a7f4eb0f5",
   "lastOpenFiles": [
     "Pasted image 20260314003132.png",
     "efefefwf.md",
+    "flutter-install.sh",
     "samples/Untitled.md",
     "PWA_README fffff.md",
     "samples"
